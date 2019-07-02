@@ -28,6 +28,12 @@ const rl = readline.createInterface({
 
 rl.question(`Enter  URL: `, (url) => {
   console.log(`Firing Analytics for ${url}!`);
+  console.log(`
+   ||  ||
+   \\\\()//
+  //(__)\\\\
+  ||    ||
+  `);
 
   (async () => {
       try {
