@@ -16,8 +16,8 @@ const chalk = require ("chalk");
 const error = chalk.bold.red;
 const success = chalk.keyword("green");
 
-const username = 'test';
-const password = 'test';
+// const username = 'test';
+// const password = 'test';
 
 const readline = require('readline');
 const rl = readline.createInterface({
@@ -77,7 +77,6 @@ rl.question(`Enter  URL: `, (url) => {
             jsonUrl = jsonUrl + ".json";
           }
 
-//TODO: add logic to append .json to end of url
 // for root page, add /index.json
 //for search: ?xYextForceJson=true
 
@@ -167,9 +166,6 @@ rl.question(`Enter  URL: `, (url) => {
             }
             function CheckAnchorQueries(anchor) {
               if (anchor && anchor.href) {
-                // console.log("askdjfasd");
-                // console.log(anchor);
-                // console.log(anchor.href);
                 let eName = GetParams(anchor.href)['ya-track'];
                 if (eName) {
                   return eName;
@@ -202,7 +198,9 @@ rl.question(`Enter  URL: `, (url) => {
 
                 let preventDefaultEvent = SearchElementForSelector(element, '[data-ya-prevent-default]');
 
-                if (!preventDefaultEvent && !trackDetails) {
+                let vectorMap = SearchElementForSelector(element, '.VectorMap-link');
+
+                if (!preventDefaultEvent && !trackDetails && !vectorMap) {
                   let anchor = SearchElementForSelector(element, 'a');
                   if (anchor) {
                     srcEl = anchor;
@@ -214,7 +212,7 @@ rl.question(`Enter  URL: `, (url) => {
                   }
                 }
 
-                if (!preventDefaultEvent && !trackDetails && !type) {
+                if (!preventDefaultEvent && !trackDetails && !type && !vectorMap) {
                   let button = SearchElementForSelector(element, 'button');
                   if (button) {
                     srcEl = button;
@@ -222,7 +220,7 @@ rl.question(`Enter  URL: `, (url) => {
                   }
                 }
 
-                if (!preventDefaultEvent && !trackDetails && !type) {
+                if (!preventDefaultEvent && !trackDetails && !type && !vectorMap) {
                   let input = SearchElementForSelector(element, 'input');
                   if (input && input.type != 'hidden') {
                     srcEl = input;
@@ -282,11 +280,11 @@ rl.question(`Enter  URL: `, (url) => {
 
           });
           await page.waitFor(100000);
-          await browser.close();
+          // await browser.close();
           console.log(success("Browser Closed"));
       } catch (err) {
           console.log(err);
-          await browser.close();
+          // await browser.close();
           console.log(error("Browser Closed"));
       }
   })();
