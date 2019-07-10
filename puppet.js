@@ -280,11 +280,11 @@ rl.question(`Enter  URL: `, (url) => {
 
           });
           await page.waitFor(100000);
-          // await browser.close();
+          await browser.close();
           console.log(success("Browser Closed"));
       } catch (err) {
           console.log(err);
-          // await browser.close();
+          await browser.close();
           console.log(error("Browser Closed"));
       }
   })();
