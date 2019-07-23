@@ -1,11 +1,3 @@
-// import * from './Analytics.js';
-// import {SelectorTracking} from './Helpers.js';
-// import {GetParams} from './Helpers.js';
-// import {CheckAnchorQueries} from './Helpers.js';
-// import {SearchElementForSelector} from './Helpers.js';
-// import {CalcEventNameForElement} from './Helpers.js';
-// import {CalcEventNameMap} from './Helpers.js';
-import { Warn } from './Utils.js';
 import { Analytics } from './Analytics2.js';
 
 
@@ -24,7 +16,6 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
 
 rl.question(`Enter  URL: `, (url) => {
   console.log(`Firing Analytics for ${url}!`);
@@ -113,15 +104,8 @@ rl.question(`Enter  URL: `, (url) => {
             }
             return jsonData;
           });
-          //
-          // await page.setViewport({
-          //     width: 100,
-          //     height: 100
-          // });
 
           await page.goto(`${url}`);
-
-
 
           await page.exposeFunction('CalcEventNameForElement', (name, referrer, url) => {
             let type = null;

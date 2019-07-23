@@ -1,12 +1,4 @@
 import { Debug } from './Debug.js';
-// import { CalcEventNameMap } from './Helpers.js';
-
-// function PrintEvents () {
-//   if (!Debug.isEnabled()) return;
-//   for (const name of Array.from(CalcEventNameMap().keys())) {
-//     console.log(name);
-//   }
-// }
 
 function Warn (target) {
   if (!Debug.isEnabled()) return;
@@ -19,7 +11,5 @@ function PrintEvent(eventName) {
 }
 
 export {
-  PrintEvent,
-  // PrintEvents,
-  Warn
+  PrintEvent
 }

@@ -1,18 +1,12 @@
-import { DelayNavigation as NavigateAfterActionIfNeeded } from './DelayNavigation.js';
-import { CalcEventNameForElement, SelectorTracking, SearchElementForSelector } from './Helpers.js';
 import { PrintEvent } from './Utils.js';
-import { OnReady } from "./Browser.js";
-
 
 let siteData = {};
-
 
 class Analytics {
   constructor(win = {}){
 
     const analyticsQName = win.YextAnalyticsObject || 'ya';
     const _this = this;
-    // this._eventNameCalculator = eventNameCalculator;
 
     this.dom = win.document;
     Object.assign(siteData, {
@@ -36,9 +30,7 @@ class Analytics {
 
   static send(data, pixelInfo, cb) {
     return this.fire(this.pixelURL(data, pixelInfo), cb);
-    // console.log(data);
   }
-
 
   static seed() {
     return Date.now() + Math.floor(1000 * Math.random());
@@ -46,7 +38,6 @@ class Analytics {
 
   static pixelURL(optionalData, data) {
     let combinedData = {};
-    // // todo Look at this.siteData
     Object.assign(combinedData, data);
     Object.assign(combinedData, optionalData);
     combinedData.v = this.seed();
@@ -65,7 +56,6 @@ class Analytics {
   }
 
   static fire(pixel, cb) {
-    // console.log(pixel);
     return pixel
   }
 }
