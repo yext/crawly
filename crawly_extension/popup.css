@@ -1,0 +1,18 @@
+body {
+  margin: 10px 20px 10px 20px;
+  justify-content: center;
+  text-align: center;
+}
+
+.main {
+  padding-top: 10px;
+}
+
+.spider {
+  line-height: 0;
+  white-space: pre;
+}
+
+.title {
+  padding-bottom: 10px;
+}
