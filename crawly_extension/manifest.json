@@ -1,0 +1,21 @@
+{
+  "name": "Crawly",
+  "version": "1.0",
+  "description": "crawls a site and fires all analytics events",
+  "permissions": ["declarativeContent", "storage", "contextMenus", "*://*/*"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery-3.4.1.min.js", "URI.min.js"]
+    }
+  ],
+  "browser_action":{
+    "default_popup": "popup.html",
+    "default_icon": "analytics.png"
+  },
+  "manifest_version": 2
+}
