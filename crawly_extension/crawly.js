@@ -1,10 +1,24 @@
+
 var url = window.location.href;
 
 //TODO: figure out url parsing - URI.js??????
 
 var jsonUrl = url;
 
-//TODO: to try/if/else to see if it is a locator, then add forcejson as last resort?
+var urlParse = new URI(url);
+
+var host = urlParse.host();
+// var suffix = urlParse.suffix();
+// //TODO: to try/if/else to see if it is a locator, then add forcejson as last resort?
+// if (suffix == "html")
+// {
+//   jsonUrl = urlParse.suffix(json);
+// }
+// else if (suffix != "")
+// {
+//   jsonUrl = urlParse.suffix(com/index.json)
+// }
+// else
 
 if(url.includes("search"))
 {
@@ -35,6 +49,7 @@ else {
 }
 
 let names = [];
+let downloadData = [];
 
 function SearchElementForSelector(el, s) {
   while (el && (el.tagName && !el.matches(s))) {
@@ -95,6 +110,7 @@ events.forEach(function(element){
     let type = null;
     let trackDetails = null;
     let srcEl = null;
+
 
     for (const selector in SelectorTracking) {
       if (!element.matches(selector)) continue;
@@ -172,13 +188,13 @@ events.forEach(function(element){
         }
         let name = tags.reverse().join('_');
         names.push(name);
+        downloadData.push(name+','+srcEl);
 
     }
   } catch (err){
     console.log(err);
   }
   });
-
 
 async function pageJson() {
    var jsonData = {};
@@ -213,11 +229,10 @@ async function pageJson() {
   var pagesReferrer = window.document.referrer;
   var pageurl = window.location.pathname;
 
+  var csv = "data:text/csv;charset=utf-8,%EF%BB%BF"+encodeURI('Name\n');
+
   jsonData['pagesReferrer'] = pagesReferrer;
   jsonData['pageurl'] = pageurl;
-  console.log(jsonData);
-  console.log(names);
-
   names.forEach(function(name){
     var pixel = pixelURL({eventType: name}, jsonData)
     const px = document.createElement("img");
@@ -227,7 +242,16 @@ async function pageJson() {
     px.style.position = 'absolute';
     px.alt = '';
     document.body.appendChild(px);
+    csv = csv + encodeURI(name+'\n')
   });
+  // console.log(downloadData);
+  // downloadData.forEach(function(row) {
+  //     csv = csv + encodeURI(row+'\n');
+  // });
+
+  // console.log(csv);
+
+  chrome.runtime.sendMessage({names: csv, host: host});
 
 
 }

@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["jquery-3.4.1.min.js"]
+      "js": ["jquery-3.4.1.min.js", "URI.min.js"]
     }
   ],
   "browser_action":{
