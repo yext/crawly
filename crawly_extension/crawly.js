@@ -1,48 +1,29 @@
 
 var url = window.location.href;
 
-//TODO: figure out url parsing - URI.js??????
 
 var jsonUrl = url;
 
 var urlParse = new URI(url);
 
 var host = urlParse.host();
-// var suffix = urlParse.suffix();
-// //TODO: to try/if/else to see if it is a locator, then add forcejson as last resort?
-// if (suffix == "html")
-// {
-//   jsonUrl = urlParse.suffix(json);
-// }
-// else if (suffix != "")
-// {
-//   jsonUrl = urlParse.suffix(com/index.json)
-// }
-// else
 
-if(url.includes("search"))
-{
-  jsonUrl = jsonUrl + "?xYextForceJson=true";
-}
-else if(url.endsWith(".com"))
-{
-  jsonUrl = jsonUrl + "/index.json";
-}
-else if(url.endsWith(".com/"))
-{
-  jsonUrl = jsonUrl + "index.json";
-}
-else if(url.endsWith(".ca"))
-{
-  jsonUrl = jsonUrl + "/index.json";
-}
-else if(url.endsWith(".ca/"))
-{
-  jsonUrl = jsonUrl + "index.json";
-}
-else if(url.endsWith(".html"))
+var regex1 = new RegExp(".[a-zA-Z]{2,}$");
+var regex2 = new RegExp(".[a-zA-Z]{2,}\/$");
+
+if(url.endsWith(".html"))
 {
   jsonUrl = jsonUrl.substring(0, jsonUrl.length-5) + ".json";
+}
+else if(regex1.test(url)){
+  jsonUrl = jsonUrl + "/index.json";
+}
+else if(regex2.test(url)){
+  jsonUrl = jsonUrl + "index.json";
+}
+else if(url.includes("search"))
+{
+  jsonUrl = jsonUrl + "?xYextForceJson=true";
 }
 else {
   jsonUrl = jsonUrl + ".json";
@@ -198,6 +179,10 @@ events.forEach(function(element){
 
 async function pageJson() {
    var jsonData = {};
+   // try{
+   //   await $.getJSON(jsonUrl);
+   //
+   // }
    await $.getJSON(jsonUrl, function(data) {
 
     var busId = data['businessId'];
@@ -252,8 +237,6 @@ async function pageJson() {
   // console.log(csv);
 
   chrome.runtime.sendMessage({names: csv, host: host});
-
-
 }
 
 pageJson();

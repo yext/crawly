@@ -40,29 +40,22 @@ rl.question(`Enter  URL: `, (url) => {
 // TODO: find out how to append username and password into url????
 
           var jsonUrl = url;
-          if(url.includes("search"))
-          {
-            jsonUrl = jsonUrl + "?xYextForceJson=true";
-          }
-          else if(url.endsWith(".com"))
-          {
-            jsonUrl = jsonUrl + "/index.json";
-          }
-          else if(url.endsWith(".com/"))
-          {
-            jsonUrl = jsonUrl + "index.json";
-          }
-          else if(url.endsWith(".ca"))
-          {
-            jsonUrl = jsonUrl + "/index.json";
-          }
-          else if(url.endsWith(".ca/"))
-          {
-            jsonUrl = jsonUrl + "index.json";
-          }
-          else if(url.endsWith(".html"))
+          var regex1 = new RegExp(".[a-zA-Z]{2,}$");
+          var regex2 = new RegExp(".[a-zA-Z]{2,}\/$");
+
+          if(url.endsWith(".html"))
           {
             jsonUrl = jsonUrl.substring(0, jsonUrl.length-5) + ".json";
+          }
+          else if(regex1.test(url)){
+            jsonUrl = jsonUrl + "/index.json";
+          }
+          else if(regex2.test(url)){
+            jsonUrl = jsonUrl + "index.json";
+          }
+          else if(url.includes("search"))
+          {
+            jsonUrl = jsonUrl + "?xYextForceJson=true";
           }
           else {
             jsonUrl = jsonUrl + ".json";
